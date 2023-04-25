@@ -1,0 +1,17 @@
+const { SlashCommandBuilder, Client, GatewayIntentBits } = require("discord.js");
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+client.login(process.env.DISCORD_TOKEN);
+
+module.exports = {
+  data: new SlashCommandBuilder().setName("test").setDescription("test of dm").setDMPermission(false),
+  async execute(interaction) {
+    await interaction.deferReply({ ephemeral: true });
+    await interaction.editReply("DM으로 확인하세요");
+
+    // client.users.fetch(interaction.member.user.id, false).then((user) => {
+    //   user.send("hello world");
+    // });
+    const user = await client.users.fetch(interaction.member.user.id, false);
+    user.send("hello world");
+  },
+};

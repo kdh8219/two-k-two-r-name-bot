@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "discord.js": "^14.6.0",
+    "dotenv": "^16.0.3",
+    "firebase-admin": "^11.2.0",
+    "mojang-api-js": "^1.0.1",
+    "nodemon": "^2.0.20"
+  }
+}

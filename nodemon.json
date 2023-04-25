@@ -1,0 +1,3 @@
+{
+    "ignore":["data.json","temp_users.json"]
+}
