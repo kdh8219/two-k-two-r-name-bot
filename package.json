@@ -4,6 +4,13 @@
     "dotenv": "^16.0.3",
     "firebase-admin": "^11.2.0",
     "mojang-api-js": "^1.0.1",
-    "nodemon": "^2.0.20"
-  }
+    "nodemon": "^2.0.20",
+    "typescritp": "^1.0.0"
+  },
+  "name": "two-k-two-r-name-bot",
+  "version": "2.0.0",
+  "description": "a discord bot for 2k2r",
+  "main": "src/main.ts",
+  "author": "kdh8219 <65698239+kdh8219@users.noreply.github.com>",
+  "private": true
 }

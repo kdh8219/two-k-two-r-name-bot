@@ -18,7 +18,12 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("mov_blacklist_super")
     .setDescription("add user to blacklist")
-    .addUserOption((option) => option.setName("discord").setDescription("discord id of blacklister").setRequired(true))
+    .addUserOption((option) =>
+      option
+        .setName("discord")
+        .setDescription("discord id of blacklister")
+        .setRequired(true)
+    )
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .setDMPermission(false),
   async execute(interaction) {
@@ -32,10 +37,17 @@ module.exports = {
         data["members"].splice(discord_search_point, 1);
         data["blacklist"].push(blackListing);
         await firebase.set(data);
-        await interaction.editReply({ content: "성공적으로 해당 discord id와 minecraft id를 블렉리스팅 했어요!", ephemeral: true });
+        await interaction.editReply({
+          content:
+            "성공적으로 해당 discord id와 minecraft id를 블렉리스팅 했어요!",
+          ephemeral: true,
+        });
         return;
       }
     } //등록되지 않았을경우
-    await interaction.editReply({ content: "`에러`:해당 discord id를 찾을 수 없었어요", ephemeral: true }); //TODO:
+    await interaction.editReply({
+      content: "`에러`:해당 discord id를 찾을 수 없었어요",
+      ephemeral: true,
+    });
   },
 };

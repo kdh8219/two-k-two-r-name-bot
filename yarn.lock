@@ -1680,6 +1680,11 @@ type-check@~0.3.2:
   dependencies:
     prelude-ls "~1.1.2"
 
+typescritp@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/typescritp/-/typescritp-1.0.0.tgz#7923ebbd3ec74f780633c8be2e8aa1d2ecac2b8f"
+  integrity sha512-88hSOM0JRNE+lY8LQvwebA6WCf54+FoDUQuNCuoBvHxu+tj76LteTUymKzwuS6VVAuBLfI5xcZyv88sj4yxDaw==
+
 uc.micro@^1.0.1, uc.micro@^1.0.5:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/uc.micro/-/uc.micro-1.0.6.tgz#9c411a802a409a91fc6cf74081baba34b24499ac"
