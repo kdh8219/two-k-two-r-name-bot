@@ -1,9 +1,8 @@
-import { Client, Collection, Events, GatewayIntentBits } from "discord.js";
+import { Client, Events, GatewayIntentBits } from "discord.js";
 import { config } from "dotenv";
 config();
 
-import { TCommand } from "./functions.js";
-import commands from "./command/commands.js";
+import { getCommands } from "./functions.js";
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -44,11 +43,3 @@ client.on(Events.InteractionCreate, async (interaction) => {
 });
 
 client.login(process.env.DISCORD_TOKEN);
-
-function getCommands(): Collection<string, TCommand> {
-  const commandColection = new Collection<string, TCommand>();
-  for (const command of commands) {
-    commandColection.set(command.data.name, command);
-  }
-  return commandColection;
-}

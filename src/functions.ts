@@ -1,4 +1,6 @@
-import { SlashCommandBuilder } from "discord.js";
+import { Collection, SlashCommandBuilder } from "discord.js";
+
+import commands from "./command/commands.js";
 
 export type TCommand = {
   data: SlashCommandBuilder;
@@ -62,4 +64,12 @@ export function check_user_type_by_minecraft_uuid(
     }
   }
   return EUserType.Unregistered;
+}
+
+export function getCommands(): Collection<string, TCommand> {
+  const commandColection = new Collection<string, TCommand>();
+  for (const command of commands) {
+    commandColection.set(command.data.name, command);
+  }
+  return commandColection;
 }
