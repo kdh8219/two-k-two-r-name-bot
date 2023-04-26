@@ -12,5 +12,6 @@
   "description": "a discord bot for 2k2r",
   "main": "src/main.ts",
   "author": "kdh8219 <65698239+kdh8219@users.noreply.github.com>",
-  "private": true
+  "private": true,
+  "type": "module"
 }
