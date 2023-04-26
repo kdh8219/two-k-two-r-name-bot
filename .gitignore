@@ -1,5 +1,6 @@
 # 인증정보
 /firebase
+.env
 
 # 패키지
 /node_modules
