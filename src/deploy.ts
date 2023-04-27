@@ -18,8 +18,8 @@ const rest = new REST({ version: "10" }).setToken(
     // The put method is used to fully refresh all commands in the guild with the current set
     await rest.put(
       Routes.applicationGuildCommands(
-        process.env.discord_CLIENT_ID as string,
-        process.env.discord_GUILD_ID as string
+        process.env.DISCORD_CLIENT_ID as string,
+        process.env.DISCORD_TARGET_GUILD_ID as string
       ),
       { body: commands }
     );

@@ -4,7 +4,7 @@ import { config } from "dotenv";
 config();
 
 initializeApp({
-  credential: cert(JSON.parse(process.env["firebase_cert"] as string)),
+  credential: cert(JSON.parse(process.env.FIREBASE_CERT as string)),
 });
 
 const db = getFirestore();
