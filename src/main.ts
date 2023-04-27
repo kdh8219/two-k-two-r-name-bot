@@ -9,8 +9,8 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 const commandColection = getCommands();
 export let onTime: Date;
 
-client.once(Events.ClientReady, (c) => {
-  console.log(`Ready: discord client as ${c.user.tag}`);
+client.once(Events.ClientReady, (event) => {
+  console.log(`[DISCORD] Ready: discord client as ${event.user.tag}`);
   onTime = new Date();
 });
 
