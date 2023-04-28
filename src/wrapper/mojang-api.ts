@@ -12,7 +12,7 @@ class MojangAPI {
     const request = await axios.get(
       `https://api.mojang.com/user/profile/${minecraft_uuid}`
     );
-    id = JSON.parse(request.data).name;
+    id = request.data.name;
 
     if (!id) throw new Error("Failed to get minecraft id from api");
 
@@ -23,10 +23,10 @@ class MojangAPI {
     let uuid = this.cached.get_by_second(minecraft_id);
     if (uuid) return uuid;
 
-    const request = await axios.get(
+    const response = await axios.get(
       `https://api.mojang.com/users/profiles/minecraft/${minecraft_id}`
     );
-    uuid = JSON.parse(request.data).id;
+    uuid = response.data.id;
     if (!uuid) throw new Error("Failed to get minecraft id from api");
 
     this.cached.remove_by_first(uuid);
