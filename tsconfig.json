@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "out",
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "node"
+  },
+  "exclude": ["temp", "test"]
+}

@@ -5,3 +5,6 @@
 
 # 패키지
 /node_modules
+
+#빌드파일
+/out
