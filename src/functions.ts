@@ -15,8 +15,8 @@ export function getCommands(): Collection<string, TCommand> {
 }
 
 export type TUser = {
-  discord: string; // id
-  minecraft: string[]; //uuid
+  discord_id: string; // id
+  minecraft_uuid: string; //uuid
 };
 
 // export type TData = {
