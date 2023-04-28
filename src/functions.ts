@@ -1,10 +1,14 @@
-import { Collection, SlashCommandBuilder } from "discord.js";
+import {
+  Collection,
+  SlashCommandBuilder,
+  ChatInputCommandInteraction,
+} from "discord.js";
 
 import commands from "./command/commands.js";
 
 export type TCommand = {
   data: SlashCommandBuilder;
-  execute: Function;
+  execute: (interaction: ChatInputCommandInteraction) => void;
 };
 export function getCommands(): Collection<string, TCommand> {
   const commandColection = new Collection<string, TCommand>();
