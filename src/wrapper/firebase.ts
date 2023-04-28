@@ -4,7 +4,11 @@ import { config } from "dotenv";
 config();
 
 initializeApp({
-  credential: cert(JSON.parse(process.env.FIREBASE_CERT as string)),
+  credential: cert({
+    projectId: process.env.FIREBASE_CERT_PROJECT_ID,
+    clientEmail: process.env.FIREBASE_CERT_CLIENT_EMAIL,
+    privateKey: process.env.FIREBASE_CERT_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+  }),
 });
 
 const db = getFirestore();
