@@ -14,7 +14,7 @@ export default class TwoWayMap<T1, T2> {
   }
   set_by_first(first: T1, second: T2) {
     const secondGet = this.secondMap.get(second);
-    if (!secondGet) {
+    if (secondGet) {
       throw new Error("Duplicate second argument");
     }
     this.firstMap.set(first, second);
@@ -22,7 +22,7 @@ export default class TwoWayMap<T1, T2> {
   }
   set_by_second(first: T1, second: T2) {
     const firstGet = this.firstMap.get(first);
-    if (!firstGet) {
+    if (firstGet) {
       throw new Error("Duplicate first argument");
     }
     this.firstMap.set(first, second);
