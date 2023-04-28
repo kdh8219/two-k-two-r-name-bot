@@ -9,6 +9,9 @@ initializeApp({
     clientEmail: process.env.FIREBASE_CERT_CLIENT_EMAIL,
     privateKey: process.env.FIREBASE_CERT_PRIVATE_KEY?.replace(/\\n/g, "\n"),
   }),
+  databaseAuthVariableOverride: {
+    uid: process.env.FIREBASE_UID,
+  },
 });
 
 const db = getFirestore();
