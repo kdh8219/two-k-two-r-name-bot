@@ -21,7 +21,11 @@ const rest = new REST({ version: "10" }).setToken(
         process.env.DISCORD_CLIENT_ID as string,
         process.env.DISCORD_TARGET_GUILD_ID as string
       ),
-      { body: commands }
+      {
+        body: commands.map((command) => {
+          return command.data.toJSON();
+        }),
+      }
     );
 
     console.log(`Successfully reloaded all application (/) commands.`);
