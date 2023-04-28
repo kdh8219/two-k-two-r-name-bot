@@ -1,4 +1,8 @@
-import { SlashCommandBuilder, ChatInputCommandInteraction } from "discord.js";
+import {
+  SlashCommandBuilder,
+  ChatInputCommandInteraction,
+  EmbedBuilder,
+} from "discord.js";
 
 export default {
   data: new SlashCommandBuilder()
@@ -11,12 +15,21 @@ export default {
       fetchReply: true,
       ephemeral: true,
     });
-    interaction.editReply({
-      content: `**PONG🏓**\n\`\`\`\n
-        Websocket heartbeat: ${interaction.client.ws.ping}ms.
-      \nRoundtrip latency: ${
-        defer.createdTimestamp - interaction.createdTimestamp
-      }ms\nRunner: ${process.env.RUNNER_NAME}\n\`\`\``,
-    });
+    const embed = new EmbedBuilder()
+      .setColor(0x0099ff)
+      .setTitle("***PONG🏓***")
+      .addFields(
+        {
+          name: "Websocket heartbeat",
+          value: `${interaction.client.ws.ping}ms`,
+        },
+        {
+          name: "Roundtrip latency",
+          value: `${defer.createdTimestamp - interaction.createdTimestamp}ms`,
+        }
+      )
+      .setFooter({ text: `Bot runner: ${process.env.RUNNER_NAME}` });
+
+    interaction.editReply({ embeds: [embed] });
   },
 };
