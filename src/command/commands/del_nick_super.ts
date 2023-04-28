@@ -40,14 +40,15 @@ export default {
       return;
     }
     const members = firebase.collection("members");
-    if (
-      !(
-        await members
-          .where("minecraft_uuid", "==", mcuuid)
-          .where("discord_id", "==", discord_id)
-          .get()
-      ).empty
-    ) {
+    const the_member = await members
+      .where("minecraft_uuid", "==", mcuuid)
+      .where("discord_id", "==", discord_id)
+      .get();
+    if (!the_member.empty) {
+      the_member.forEach((member) => {
+        members.doc(member.id).delete();
+      });
+
       let discord_tag;
       try {
         const discord_user = await interaction.client.users.fetch(discord_id);
