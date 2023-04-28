@@ -50,10 +50,13 @@ export default {
       }
     });
 
+    const file_like = {
+      blacklist: Object.fromEntries(blacklist_data),
+      members: Object.fromEntries(member_data),
+    };
+
     const buffer_file = {
-      attachment: Buffer.from(
-        JSON.stringify({ blacklist: blacklist_data, members: member_data })
-      ),
+      attachment: Buffer.from(JSON.stringify(file_like)),
       name: "raw_file.txt",
     };
     await interaction.editReply({ files: [buffer_file] });

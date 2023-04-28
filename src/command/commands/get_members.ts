@@ -34,10 +34,10 @@ export default {
     });
 
     let text = "";
-    member_data.forEach(async (minecraft_uuids, discord_id) => {
+    for (const member of member_data) {
       let discord_tag: string;
       try {
-        discord_tag = (await interaction.client.users.fetch(discord_id)).tag;
+        discord_tag = (await interaction.client.users.fetch(member[0])).tag;
       } catch (e) {
         discord_tag = `Deleted User#0000`;
       }
@@ -45,12 +45,12 @@ export default {
       text += `(${discord_id})`;
 
       text += " : ";
-      minecraft_uuids.forEach(async (minecraft_uuid) => {
+      for (const minecraft_uuid of member[1]) {
         text += await mojangAPI.getIdFromUUID(minecraft_uuid);
         text += ", ";
-      });
+      }
       text = text.slice(0, text.length - 2);
-    });
+    }
 
     const buffer_file = {
       attachment: Buffer.from(text),
