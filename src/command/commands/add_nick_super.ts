@@ -61,7 +61,7 @@ export default {
       return;
     }
 
-    if (!(await members.where("discord_id", "==", discord_id).get()).empty) {
+    if ((await members.where("discord_id", "==", discord_id).get()).empty) {
       await interaction.editReply({
         content: `${mcid}(${mcuuid})님 2k2r에 오신것을 환영합니다!`,
       });
