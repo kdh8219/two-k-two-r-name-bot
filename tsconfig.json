@@ -4,7 +4,8 @@
     "outDir": "out",
     "target": "ES2022",
     "module": "ES2022",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true
   },
   "exclude": ["temp", "test"]
 }
