@@ -75,14 +75,15 @@ export default {
     }
 
     let text = "";
-    text += interaction.guild.members.cache.get(discord_id).nickname;
+    text += (await interaction.guild.members.fetch(discord_id)).nickname;
     text += ": ";
     for (const user of the_datas.docs) {
-      const minecraft_uuid = user["minecraft_uuid"];
-      text += mojangAPI.getIdFromUUID(minecraft_uuid);
+      const minecraft_uuid = user.data()["minecraft_uuid"];
+      text += await mojangAPI.getIdFromUUID(minecraft_uuid);
+      text += ` [${minecraft_uuid}]`;
       text += ", ";
     }
-    text = text.slice(0, -1);
+    text = text.slice(0, -2);
     interaction.editReply({
       content: text,
     });
