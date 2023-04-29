@@ -8,6 +8,7 @@ import get_blacklist from "./commands/get_blacklist.js";
 import get_file from "./commands/get_file.js";
 import get_members from "./commands/get_members.js";
 import get_raw_file from "./commands/get_raw_file.js";
+import mov_blacklist_super from "./commands/mov_blacklist_super.js";
 import ping from "./commands/ping.js";
 
 const commands: TCommand[] = [
@@ -19,6 +20,7 @@ const commands: TCommand[] = [
   get_file,
   get_members,
   get_raw_file,
+  mov_blacklist_super,
   ping,
 ];
 export default commands;
