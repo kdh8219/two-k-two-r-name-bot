@@ -50,7 +50,8 @@ export default {
         text += await mojangAPI.getIdFromUUID(minecraft_uuid);
         text += ", ";
       }
-      text = text.slice(0, text.length - 2);
+      text = text.slice(0, -2);
+      text += "\n";
     }
 
     const buffer_file = {
