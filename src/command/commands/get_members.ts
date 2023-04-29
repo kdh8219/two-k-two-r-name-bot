@@ -2,7 +2,7 @@ import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 
 import firebase from "../../wrapper/firebase.js";
 import mojangAPI from "../../wrapper/mojang-api.js";
-import { TUser } from "../../functions.js";
+import { TUser, dmSlice } from "../../functions.js";
 
 export default {
   data: new SlashCommandBuilder()
@@ -37,25 +37,34 @@ export default {
     for (const member of member_data) {
       let nickname: string;
       try {
-        nickname = interaction.guild.members.cache.get(discord_id).nickname;
+        nickname = (await interaction.guild.members.fetch(member[0])).nickname;
       } catch (e) {
-        nickname = `Deleted User`;
+        nickname = ``;
       }
-      text += nickname;
-      text += `(${discord_id})`;
+      let tag: string;
+      try {
+        tag = (await interaction.client.users.fetch(member[0])).tag;
+      } catch (e) {
+        tag = `Deleted User#0000`;
+      }
+      text += `\`${nickname}\``;
+      text += `【\`${tag}\`】`;
+      text += `[${discord_id}]`;
 
-      text += " : ";
+      text += "\n";
       for (const minecraft_uuid of member[1]) {
-        text += await mojangAPI.getIdFromUUID(minecraft_uuid);
-        text += ", ";
+        text += " - ";
+        text += `\`${await mojangAPI.getIdFromUUID(minecraft_uuid)}\``;
+        text += `[${minecraft_uuid}]`;
+        text += "\n";
       }
-      text = text.slice(0, text.length - 2);
+      text = text.slice(0, -1);
+      text += "\n\n";
     }
-
-    const buffer_file = {
-      attachment: Buffer.from(text),
-      name: "members.txt",
-    };
-    await interaction.editReply({ files: [buffer_file] });
+    const sliced = dmSlice(text);
+    for (const chunc of sliced) {
+      await interaction.user.send(chunc);
+    }
+    await interaction.editReply("dm을 확인해주세요.");
   },
 };
