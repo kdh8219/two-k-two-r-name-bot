@@ -35,13 +35,13 @@ export default {
 
     let text = "";
     for (const member of member_data) {
-      let discord_tag: string;
+      let nickname: string;
       try {
-        discord_tag = (await interaction.client.users.fetch(member[0])).tag;
+        nickname = interaction.guild.members.cache.get(discord_id).nickname;
       } catch (e) {
-        discord_tag = `Deleted User#0000`;
+        nickname = `Deleted User`;
       }
-      text += discord_tag;
+      text += nickname;
       text += `(${discord_id})`;
 
       text += " : ";
