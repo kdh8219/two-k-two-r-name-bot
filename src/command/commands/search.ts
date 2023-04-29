@@ -73,9 +73,10 @@ export default {
         content: "`에러`: 해당 멤버는 등록되지 않았어요!",
       });
     }
-
     let text = "";
-    text += (await interaction.guild.members.fetch(discord_id)).nickname;
+    text +=
+      (await interaction.guild.members.fetch(discord_id)).nickname ||
+      interaction.user.username;
     text += ": ";
     for (const user of the_datas.docs) {
       const minecraft_uuid = user.data()["minecraft_uuid"];

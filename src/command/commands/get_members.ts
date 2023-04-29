@@ -37,7 +37,9 @@ export default {
     for (const member of member_data) {
       let nickname: string;
       try {
-        nickname = (await interaction.guild.members.fetch(member[0])).nickname;
+        nickname =
+          (await interaction.guild.members.fetch(member[0])).nickname ||
+          (await interaction.client.users.fetch(member[0])).username;
       } catch (e) {
         nickname = ``;
       }
