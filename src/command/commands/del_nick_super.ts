@@ -28,10 +28,10 @@ export default {
   async execute(interaction: ChatInputCommandInteraction) {
     const discord_id = interaction.options.getUser("discord")?.id as string;
 
-    const mcid = interaction.options.getString("minecraft_id") as string;
-    let mcuuid: string;
+    const minecraft_id = interaction.options.getString("minecraft_id") as string;
+    let minecraft_uuid: string;
     try {
-      mcuuid = await mojangAPI.getUUIDFromId(mcid);
+      minecraft_uuid = await mojangAPI.getUUIDFromId(minecraft_id);
     } catch {
       await interaction.editReply({
         content:
@@ -41,7 +41,7 @@ export default {
     }
     const members = firebase.collection("members");
     const the_member = await members
-      .where("minecraft_uuid", "==", mcuuid)
+      .where("minecraft_uuid", "==", minecraft_uuid)
       .where("discord_id", "==", discord_id)
       .get();
     if (!the_member.empty) {
@@ -56,8 +56,8 @@ export default {
       } catch {
         discord_tag = "Deleted User#0000";
       }
-      interaction.editReply({
-        content: `삭제 완료:${discord_tag}(${discord_id})에게서 ${mcid}(${mcuuid})를 제거했습니다.`,
+      await interaction.editReply({
+        content: `삭제 완료:${discord_tag}(${discord_id})에게서 ${minecraft_id}(${minecraft_uuid})를 제거했습니다.`,
       });
       return;
     } else {

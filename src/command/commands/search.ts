@@ -35,7 +35,7 @@ export default {
     if (
       (await members.where("discord_id", "==", interaction.user.id).get()).empty
     ) {
-      interaction.editReply({
+      await interaction.editReply({
         content: `\`에러\`:하나 이상의 아이디를 등록해야만 합니다.`,
       });
       return;
@@ -57,7 +57,7 @@ export default {
         .where("minecraft_uuid", "==", minecraft_uuid)
         .get();
       if (member.empty) {
-        interaction.editReply({
+        await interaction.editReply({
           content: `\`에러\`: 해당 마인크래프트 아이디는 등록되지 않았어요!`,
         });
         return;
@@ -67,9 +67,9 @@ export default {
       discord_id = interaction.options.getUser("discord").id;
     }
 
-    const the_datas = await members.where("discord_id", "==", discord_id).get();
-    if (the_datas.empty) {
-      interaction.editReply({
+    const the_data = await members.where("discord_id", "==", discord_id).get();
+    if (the_data.empty) {
+      await interaction.editReply({
         content: "`에러`: 해당 멤버는 등록되지 않았어요!",
       });
     }
@@ -78,14 +78,14 @@ export default {
       (await interaction.guild.members.fetch(discord_id)).nickname ||
       interaction.user.username;
     text += ": ";
-    for (const user of the_datas.docs) {
+    for (const user of the_data.docs) {
       const minecraft_uuid = user.data()["minecraft_uuid"];
       text += await mojangAPI.getIdFromUUID(minecraft_uuid);
       text += ` [${minecraft_uuid}]`;
       text += ", ";
     }
     text = text.slice(0, -2);
-    interaction.editReply({
+    await interaction.editReply({
       content: text,
     });
   },

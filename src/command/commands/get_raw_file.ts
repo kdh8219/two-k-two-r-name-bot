@@ -20,7 +20,7 @@ export default {
     const blacklist = firebase.collection("blacklist");
 
     if ((await members.where("discord_id", "==", discord_id).get()).empty) {
-      interaction.editReply({
+      await interaction.editReply({
         content: "`에러`: 하나 이상의 아이디를 등록해야 합니다.",
       });
       return;

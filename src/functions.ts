@@ -11,11 +11,11 @@ export type TCommand = {
   execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
 };
 export function getCommands(): Collection<string, TCommand> {
-  const commandColection = new Collection<string, TCommand>();
+  const commandCollection = new Collection<string, TCommand>();
   for (const command of commands) {
-    commandColection.set(command.data.name, command);
+    commandCollection.set(command.data.name, command);
   }
-  return commandColection;
+  return commandCollection;
 }
 
 export type TUser = {
@@ -35,9 +35,9 @@ export function dmSlice(raw: string): string[] {
     let front = txt.slice(0, 2000);
     let end = txt.slice(2000, txt.length);
     if (end) {
-      let tolast = front.slice(front.lastIndexOf("\n"), -1);
+      let toLast = front.slice(front.lastIndexOf("\n"), -1);
       front = front.slice(0, front.lastIndexOf("\n"));
-      end = tolast + end;
+      end = toLast + end;
     }
     return { front, end };
   }

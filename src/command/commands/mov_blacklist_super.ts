@@ -31,12 +31,12 @@ export default {
       return;
     }
 
-    const target_datas: TUser[] = [];
+    const target_data: TUser[] = [];
     target.forEach((doc) => {
-      target_datas.push(doc.data() as TUser);
+      target_data.push(doc.data() as TUser);
       members.doc(doc.id).delete();
     });
-    target_datas.forEach((user) => {
+    target_data.forEach((user) => {
       blacklist.add(user);
     });
 

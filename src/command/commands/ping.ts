@@ -24,12 +24,12 @@ export default {
           value: `${interaction.client.ws.ping}ms`,
         },
         {
-          name: "Roundtrip latency",
+          name: "RoundTrip latency",
           value: `${defer.createdTimestamp - interaction.createdTimestamp}ms`,
         }
       )
       .setFooter({ text: `Bot runner: ${process.env.RUNNER_NAME}` });
 
-    interaction.editReply({ embeds: [embed] });
+    await interaction.editReply({ embeds: [embed] });
   },
 };

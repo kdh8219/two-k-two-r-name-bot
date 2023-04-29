@@ -10,3 +10,6 @@ replit.nix
 
 #빌드파일
 /out
+
+# IDE
+/.idea

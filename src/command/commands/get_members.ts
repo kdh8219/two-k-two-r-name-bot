@@ -15,7 +15,7 @@ export default {
     const members = firebase.collection("members");
 
     if ((await members.where("discord_id", "==", discord_id).get()).empty) {
-      interaction.editReply({
+      await interaction.editReply({
         content: "`에러`: 하나 이상의 아이디를 등록해야 합니다.",
       });
       return;
@@ -64,8 +64,8 @@ export default {
       text += "\n\n";
     }
     const sliced = dmSlice(text);
-    for (const chunc of sliced) {
-      await interaction.user.send(chunc);
+    for (const chunk of sliced) {
+      await interaction.user.send(chunk);
     }
     await interaction.editReply("dm을 확인해주세요.");
   },

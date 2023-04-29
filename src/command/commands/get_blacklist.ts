@@ -7,7 +7,7 @@ import mojangAPI from "../../wrapper/mojang-api.js";
 export default {
   data: new SlashCommandBuilder()
     .setName("get_blacklist")
-    .setDescription("show blicklist")
+    .setDescription("show blacklist")
     .setDMPermission(false),
   async execute(interaction: ChatInputCommandInteraction) {
     const discord_id = interaction.user.id;
@@ -16,7 +16,7 @@ export default {
     const blacklist = firebase.collection("blacklist");
 
     if ((await members.where("discord_id", "==", discord_id).get()).empty) {
-      interaction.editReply({
+      await interaction.editReply({
         content: "`에러`: 하나 이상의 아이디를 등록해야 합니다.",
       });
       return;

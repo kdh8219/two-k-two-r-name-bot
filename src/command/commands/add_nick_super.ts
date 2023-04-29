@@ -43,19 +43,19 @@ export default {
     const blacklist = firebase.collection("blacklist");
 
     if (!(await blacklist.where("discord_id", "==", discord_id).get()).empty) {
-      interaction.editReply({
+      await interaction.editReply({
         content: "`에러`: 해당 디스코드 아이디는 블랙리스트 되었습니다.",
       });
       return;
     }
     if (!(await blacklist.where("minecraft_uuid", "==", mcuuid).get()).empty) {
-      interaction.editReply({
+      await interaction.editReply({
         content: "`에러`: 해당 마인크래프트 계정은 블랙리스트 되었습니다.",
       });
       return;
     }
     if (!(await members.where("minecraft_uuid", "==", mcuuid).get()).empty) {
-      interaction.editReply({
+      await interaction.editReply({
         content: "`에러`: 해당 마인크래프트 아이디는 이미 등록되었습니다.",
       });
       return;

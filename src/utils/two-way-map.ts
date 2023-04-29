@@ -29,19 +29,19 @@ export default class TwoWayMap<T1, T2> {
     this.secondMap.set(second, first);
   }
   remove_by_first(first: T1): T2 | undefined {
-    const firstget = this.firstMap.get(first);
-    if (!firstget) return undefined;
+    const t2 = this.firstMap.get(first);
+    if (!t2) return undefined;
 
     this.firstMap.delete(first);
-    this.secondMap.delete(firstget);
-    return firstget;
+    this.secondMap.delete(t2);
+    return t2;
   }
   remove_by_second(second: T2): T1 | undefined {
-    const secondget = this.secondMap.get(second);
-    if (!secondget) return undefined;
+    const t1 = this.secondMap.get(second);
+    if (!t1) return undefined;
 
-    this.firstMap.delete(secondget);
+    this.firstMap.delete(t1);
     this.secondMap.delete(second);
-    return secondget;
+    return t1;
   }
 }

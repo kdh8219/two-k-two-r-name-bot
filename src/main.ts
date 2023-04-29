@@ -6,7 +6,7 @@ import { getCommands } from "./functions.js";
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-const commandColection = getCommands();
+const commandCollection = getCommands();
 export let onTime: Date;
 
 client.once(Events.ClientReady, (event) => {
@@ -17,7 +17,7 @@ client.once(Events.ClientReady, (event) => {
 client.on(Events.InteractionCreate, async (interaction) => {
   if (!interaction.isChatInputCommand()) return;
 
-  const command = commandColection.get(interaction.commandName);
+  const command = commandCollection.get(interaction.commandName);
   if (interaction.commandName !== "ping") {
     await interaction.deferReply({ ephemeral: true });
   }

@@ -1,9 +1,9 @@
 import axios from "axios";
 
-import TwoWayMmap from "../utils/two-way-map.js";
+import TwoWayMap from "../utils/two-way-map.js";
 
 class MojangAPI {
-  private cached: TwoWayMmap<string, string> = new TwoWayMmap<string, string>(); // uuid, id
+  private cached: TwoWayMap<string, string> = new TwoWayMap<string, string>(); // uuid, id
 
   async getIdFromUUID(minecraft_uuid: string): Promise<string> {
     let id = this.cached.get_by_first(minecraft_uuid);
