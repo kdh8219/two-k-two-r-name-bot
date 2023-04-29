@@ -10,6 +10,7 @@ import get_members from "./commands/get_members.js";
 import get_raw_file from "./commands/get_raw_file.js";
 import mov_blacklist_super from "./commands/mov_blacklist_super.js";
 import ping from "./commands/ping.js";
+import search from "./commands/search.js";
 
 const commands: TCommand[] = [
   add_nick_super,
@@ -22,5 +23,6 @@ const commands: TCommand[] = [
   get_raw_file,
   mov_blacklist_super,
   ping,
+  search,
 ];
 export default commands;
