@@ -5,6 +5,8 @@
 
 # 패키지
 /node_modules
+.replit
+replit.nix
 
 #빌드파일
 /out
