@@ -8,7 +8,7 @@ import commands from "./command/commands.js";
 
 export type TCommand = {
   data: SlashCommandBuilder;
-  execute: (interaction: ChatInputCommandInteraction) => void;
+  execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
 };
 export function getCommands(): Collection<string, TCommand> {
   const commandColection = new Collection<string, TCommand>();
