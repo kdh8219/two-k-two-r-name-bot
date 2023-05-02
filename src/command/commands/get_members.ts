@@ -41,7 +41,7 @@ export default {
           (await interaction.guild.members.fetch(member[0])).nickname ||
           (await interaction.client.users.fetch(member[0])).username;
       } catch (e) {
-        nickname = ``;
+        nickname = ` `;
       }
       let tag: string;
       try {
