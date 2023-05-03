@@ -2,7 +2,7 @@ import { REST, Routes } from "discord.js";
 import { config } from "dotenv";
 config();
 
-import { getCommands } from "./functions.js";
+import { getCommands } from "./command/commands.js";
 
 const commands = getCommands();
 // Construct and prepare an instance of the REST module

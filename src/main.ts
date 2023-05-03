@@ -2,7 +2,7 @@ import { Client, Events, GatewayIntentBits } from "discord.js";
 import { config } from "dotenv";
 config();
 
-import { getCommands } from "./functions.js";
+import { getCommands } from "./command/commands.js";
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 

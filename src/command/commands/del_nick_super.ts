@@ -2,10 +2,12 @@ import {
   SlashCommandBuilder,
   PermissionFlagsBits,
   ChatInputCommandInteraction,
+  EmbedBuilder,
 } from "discord.js";
 
 import mojangAPI from "../../wrapper/mojang-api.js";
 import firebase from "../../wrapper/firebase.js";
+import { embed_to_channel } from "../../functions.js";
 
 export default {
   data: new SlashCommandBuilder()
@@ -28,7 +30,9 @@ export default {
   async execute(interaction: ChatInputCommandInteraction) {
     const discord_id = interaction.options.getUser("discord")?.id as string;
 
-    const minecraft_id = interaction.options.getString("minecraft_id") as string;
+    const minecraft_id = interaction.options.getString(
+      "minecraft_id"
+    ) as string;
     let minecraft_uuid: string;
     try {
       minecraft_uuid = await mojangAPI.getUUIDFromId(minecraft_id);
@@ -49,7 +53,7 @@ export default {
         members.doc(member.id).delete();
       });
 
-      let discord_tag;
+      let discord_tag: string;
       try {
         const discord_user = await interaction.client.users.fetch(discord_id);
         discord_tag = discord_user.tag;
@@ -59,12 +63,31 @@ export default {
       await interaction.editReply({
         content: `삭제 완료:${discord_tag}(${discord_id})에게서 ${minecraft_id}(${minecraft_uuid})를 제거했습니다.`,
       });
-      return;
+
+      const embed = new EmbedBuilder()
+        .setTitle("Nick deleted")
+        .setColor(0x0099ff)
+        .setFields([
+          {
+            name: "Command sender",
+            value: `${interaction.user.tag}(${interaction.user.id})`,
+          },
+          { name: " ", value: " " },
+          { name: "Targrt Discord Id", value: discord_id },
+          { name: " ", value: " " },
+          { name: "Minecraft Id", value: minecraft_id },
+          { name: "Minecraft Uuid", value: minecraft_uuid },
+        ])
+        .setTimestamp(interaction.createdAt);
+      await embed_to_channel(
+        interaction.client,
+        process.env.LOG_CHANNEL_ID,
+        embed
+      );
     } else {
       await interaction.editReply({
         content: `\`에러\`: 해당 계정이 없습니다.`,
       });
-      return;
     }
   },
 };

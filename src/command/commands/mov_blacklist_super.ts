@@ -2,10 +2,11 @@ import {
   SlashCommandBuilder,
   PermissionFlagsBits,
   ChatInputCommandInteraction,
+  EmbedBuilder,
 } from "discord.js";
 
 import firebase from "../../wrapper/firebase.js";
-import { TUser } from "../../functions.js";
+import { TUser, embed_to_channel } from "../../functions.js";
 
 export default {
   data: new SlashCommandBuilder()
@@ -43,5 +44,33 @@ export default {
     await interaction.editReply({
       content: "성공적으로 해당 discord id와 minecraft id를 블랙리스팅 했어요.",
     });
+
+    let UUIDs: string;
+    target_data
+      .map((user) => {
+        user.discord_id;
+      })
+      .map((uuid) => {
+        UUIDs += uuid;
+        UUIDs += "\n";
+      });
+    const embed = new EmbedBuilder()
+      .setTitle("User deleted")
+      .setColor(0x0099ff)
+      .setFields([
+        {
+          name: "Command sender",
+          value: `${interaction.user.tag}(${interaction.user.id})`,
+        },
+        { name: " ", value: " " },
+        { name: "Target Discord Id", value: discord_id },
+        { name: "UUIDs", value: UUIDs },
+      ])
+      .setTimestamp(interaction.createdAt);
+    await embed_to_channel(
+      interaction.client,
+      process.env.LOG_CHANNEL_ID,
+      embed
+    );
   },
 };

@@ -1,4 +1,8 @@
-import { TCommand } from "../functions.js";
+import {
+  SlashCommandBuilder,
+  ChatInputCommandInteraction,
+  Collection,
+} from "discord.js";
 
 import add_nick_super from "./commands/add_nick_super.js";
 import add_nick from "./commands/add_nick.js";
@@ -26,3 +30,15 @@ const commands: TCommand[] = [
   search,
 ];
 export default commands;
+
+export type TCommand = {
+  data: SlashCommandBuilder;
+  execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
+};
+export function getCommands(): Collection<string, TCommand> {
+  const commandCollection = new Collection<string, TCommand>();
+  for (const command of commands) {
+    commandCollection.set(command.data.name, command);
+  }
+  return commandCollection;
+}
