@@ -25,11 +25,12 @@ export function dmSlice(raw: string): string[] {
     let front = txt.slice(0, 2000);
     let end = txt.slice(2000, txt.length);
     if (end) {
-      let toLastNextLine =
-        "ㅤ" /* 공백문자 */ +
-        front.slice(front.lastIndexOf("\n"), front.length);
+      let toLastNextLine = front.slice(front.lastIndexOf("\n"), front.length);
       front = front.slice(0, front.lastIndexOf("\n"));
       end = toLastNextLine + end;
+      if (end.slice(0, 1) == "\n") {
+        end = "ㅤ" /* 공백문자 */ + end;
+      }
     }
     return { front, end };
   }
