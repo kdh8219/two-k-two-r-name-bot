@@ -30,7 +30,7 @@ export default {
 
     if (!should_remove.empty) {
       should_remove.forEach((item) => {
-        members.doc(item.id).delete();
+        item.ref.delete();
       });
 
       let discord_tag;

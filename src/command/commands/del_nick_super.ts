@@ -50,7 +50,7 @@ export default {
       .get();
     if (!the_member.empty) {
       the_member.forEach((member) => {
-        members.doc(member.id).delete();
+        member.ref.delete();
       });
 
       let discord_tag: string;
