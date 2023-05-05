@@ -76,7 +76,7 @@ export default {
     let text = "";
     text +=
       (await interaction.guild.members.fetch(discord_id)).nickname ||
-      interaction.user.username;
+      (await interaction.client.users.fetch(discord_id)).id;
     text += ": ";
     for (const user of the_data.docs) {
       const minecraft_uuid = user.data()["minecraft_uuid"];
