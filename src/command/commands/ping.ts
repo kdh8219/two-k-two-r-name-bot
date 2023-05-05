@@ -4,6 +4,8 @@ import {
   EmbedBuilder,
 } from "discord.js";
 
+import { onTime } from "../../main.js";
+
 export default {
   data: new SlashCommandBuilder()
     .setName("ping")
@@ -26,6 +28,10 @@ export default {
         {
           name: "RoundTrip latency",
           value: `${defer.createdTimestamp - interaction.createdTimestamp}ms`,
+        },
+        {
+          name: "When bot Turned on",
+          value: onTime.toString(),
         }
       )
       .setFooter({ text: `Bot runner: ${process.env.RUNNER_NAME}` });
