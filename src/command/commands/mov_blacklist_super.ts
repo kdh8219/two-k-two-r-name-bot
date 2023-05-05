@@ -55,7 +55,7 @@ export default {
         UUIDs += "\n";
       });
     const embed = new EmbedBuilder()
-      .setTitle("User deleted")
+      .setTitle("User blacklisted")
       .setColor(0x0099ff)
       .setFields([
         {
