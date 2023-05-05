@@ -51,7 +51,7 @@ export default {
       }
       text += `\`${nickname}\``;
       text += `【\`${tag}\`】`;
-      text += `[${discord_id}]`;
+      text += `[${member[0]}]`;
 
       text += "\n";
       for (const minecraft_uuid of member[1]) {
