@@ -3,6 +3,8 @@ import { config } from "dotenv";
 config();
 
 import { getCommands } from "./command/commands.js";
+import mojangAPI from "./wrapper/mojang-api.js";
+await mojangAPI.load_cache_from_firestore();
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -33,11 +35,10 @@ client.on(Events.InteractionCreate, async (interaction) => {
         content: "There was an error while executing this command!",
         ephemeral: true,
       });
-    } catch (e) {
+    } catch {
       await interaction.editReply({
         content: "There was an error while executing this command!",
       });
-      console.error(e);
     }
   }
 });
