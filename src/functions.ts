@@ -1,7 +1,13 @@
-import { ChatInputCommandInteraction, Client, EmbedBuilder } from "discord.js";
+import {
+  ChatInputCommandInteraction,
+  Client,
+  EmbedBuilder,
+  Guild,
+} from "discord.js";
 import { Firestore } from "firebase-admin/firestore";
 
 import { MojangAPI } from "./wrapper/mojang-api.js";
+import firebase from "./wrapper/firebase.js";
 
 export type TUser = {
   discord_id: string; // id
@@ -119,4 +125,30 @@ export async function embed_to_channel(
   const channel = await client.channels.fetch(channel_id);
   if (!channel.isTextBased()) return;
   channel.send({ embeds: [embed] });
+}
+
+export async function delete_members_who_left(
+  client: Client<true>,
+  guild: Guild
+) {
+  const members_collection = firebase.collection("members");
+  const members = await members_collection.get();
+  for (const doc of members.docs) {
+    const data = doc.data() as TUser;
+    try {
+      await guild.members.fetch(data.discord_id);
+    } catch {
+      doc.ref.delete();
+
+      const embed = new EmbedBuilder()
+        .setTitle("물갈이")
+        .setColor(0x0099ff)
+        .setFields([
+          { name: "Discord Id", value: data.discord_id },
+          { name: "Minecraft Uuid", value: data.minecraft_uuid },
+        ])
+        .setTimestamp(new Date());
+      await embed_to_channel(client, process.env.LOG_CHANNEL_ID, embed);
+    }
+  }
 }
