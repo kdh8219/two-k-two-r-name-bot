@@ -6,6 +6,7 @@ import {
 
 import add_nick_super from "./commands/add_nick_super.js";
 import add_nick from "./commands/add_nick.js";
+import del_members_who_left_super from "./commands/del_members_who_left_super.js";
 import del_nick_super from "./commands/del_nick_super.js";
 import del_user_super from "./commands/del_user_super.js";
 import get_blacklist from "./commands/get_blacklist.js";
@@ -19,6 +20,7 @@ import search from "./commands/search.js";
 const commands: TCommand[] = [
   add_nick_super,
   add_nick,
+  del_members_who_left_super,
   del_nick_super,
   del_user_super,
   get_blacklist,
