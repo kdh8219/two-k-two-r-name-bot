@@ -28,7 +28,7 @@ export function dmSlice(raw: string): string[] {
       let toLastNextLine = front.slice(front.lastIndexOf("\n"), front.length);
       front = front.slice(0, front.lastIndexOf("\n"));
       end = toLastNextLine + end;
-      if (end.slice(0, 1) == "\n") {
+      if (end.slice(0, 3) == "\n\n") {
         end = "ㅤ" /* 공백문자 */ + end;
       }
     }
