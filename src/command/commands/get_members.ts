@@ -2,7 +2,7 @@ import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 
 import firebase from "../../wrapper/firebase.js";
 import mojangAPI from "../../wrapper/mojang-api.js";
-import { TUser, dmSlice } from "../../functions.js";
+import { TUser } from "../../functions.js";
 
 export default {
   data: new SlashCommandBuilder()
@@ -49,6 +49,7 @@ export default {
       } catch (e) {
         tag = `Deleted User#0000`;
       }
+      text += "- ";
       text += `\`${nickname}\``;
       text += `【\`${tag}\`】`;
       text += `[${member[0]}]`;
@@ -70,3 +71,28 @@ export default {
     await interaction.editReply("dm을 확인해주세요.");
   },
 };
+
+function dmSlice(raw: string): string[] {
+  function slasher(txt: string): { front: string; end: string } {
+    let front = txt.slice(0, 2000);
+    let end = txt.slice(2000);
+    if (end) {
+      const IndexOfLastBlock = front.lastIndexOf("\n\n");
+      end = "ㅤ" /* 공백문자 */ + front.slice(IndexOfLastBlock + 1) + end;
+      front = front.slice(0, IndexOfLastBlock);
+    }
+    return { front, end };
+  }
+
+  const output: string[] = [];
+
+  let slashed = slasher(raw);
+  while (true) {
+    output.push(slashed.front);
+    if (slashed.end) {
+      slashed = slasher(slashed.end);
+    } else {
+      return output;
+    }
+  }
+}
