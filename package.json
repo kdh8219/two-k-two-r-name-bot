@@ -9,7 +9,6 @@
     "discord.js": "^14.6.0",
     "dotenv": "^16.0.3",
     "firebase-admin": "^11.2.0",
-    "nodemon": "^2.0.20",
     "typescritp": "^1.0.0"
   },
   "name": "two-k-two-r-name-bot",
@@ -17,6 +16,5 @@
   "description": "a discord bot for 2k2r",
   "main": "src/main.ts",
   "author": "kdh8219 <65698239+kdh8219@users.noreply.github.com>",
-  "private": true,
   "type": "module"
 }
