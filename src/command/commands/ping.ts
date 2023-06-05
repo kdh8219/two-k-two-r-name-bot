@@ -31,7 +31,7 @@ export default {
         },
         {
           name: "When bot Turned on",
-          value: onTime.toString(),
+          value: `<t:${~~(onTime.getTime() / 1000)}:R>`,
         }
       )
       .setFooter({ text: `Bot runner: ${process.env.RUNNER_NAME}` });
