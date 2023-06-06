@@ -36,6 +36,6 @@ export default {
       )
       .setFooter({ text: `Bot runner: ${process.env.RUNNER_NAME}` });
 
-    await interaction.editReply({ embeds: [embed] });
+    await interaction.editReply({ content: "", embeds: [embed] });
   },
 };
