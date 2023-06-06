@@ -72,6 +72,7 @@ export default {
       await interaction.editReply({
         content: "`에러`: 해당 멤버는 등록되지 않았어요!",
       });
+      return;
     }
     let text = "";
     text +=
