@@ -2,6 +2,7 @@ import { SlashCommandBuilder, ChatInputCommandInteraction } from "discord.js";
 
 import firebase from "../../wrapper/firebase.js";
 import mojangAPI from "../../wrapper/mojang-api.js";
+import { data_to_string } from "../../functions/data_to_string.js";
 
 export default {
   data: new SlashCommandBuilder()
@@ -74,18 +75,11 @@ export default {
       });
       return;
     }
-    let text = "";
-    text +=
-      (await interaction.guild.members.fetch(discord_id)).nickname ||
-      (await interaction.client.users.fetch(discord_id)).username;
-    text += ": ";
+    const minecraft_uuids: Array<string> = [];
     for (const user of the_data.docs) {
-      const minecraft_uuid = user.data()["minecraft_uuid"];
-      text += await mojangAPI.getIdFromUUID(minecraft_uuid);
-      text += ` [${minecraft_uuid}]`;
-      text += ", ";
+      minecraft_uuids.push(user.data()["minecraft_uuid"]);
     }
-    text = text.slice(0, -2);
+    const text = await data_to_string(interaction, discord_id, minecraft_uuids);
     await interaction.editReply({
       content: text,
     });

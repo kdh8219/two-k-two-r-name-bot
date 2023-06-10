@@ -4,6 +4,7 @@ import firebase from "../../wrapper/firebase.js";
 import mojangAPI from "../../wrapper/mojang-api.js";
 import { TUser } from "../../types.js";
 import { dm_slice } from "../../functions/dm_slice.js";
+import { data_to_string } from "../../functions/data_to_string.js";
 
 export default {
   data: new SlashCommandBuilder()
@@ -35,36 +36,11 @@ export default {
     });
 
     let text = "";
-    for (const member of member_data) {
-      let nickname: string;
-      try {
-        nickname =
-          (await interaction.guild.members.fetch(member[0])).nickname ||
-          (await interaction.client.users.fetch(member[0])).username;
-      } catch (e) {
-        nickname = ` `;
-      }
-      let tag: string;
-      try {
-        tag = (await interaction.client.users.fetch(member[0])).tag;
-      } catch (e) {
-        tag = `Deleted User#0000`;
-      }
-      text += "- ";
-      text += `\`${nickname}\``;
-      text += `【\`${tag}\`】`;
-      text += `[${member[0]}]`;
-
-      text += "\n";
-      for (const minecraft_uuid of member[1]) {
-        text += " - ";
-        text += `\`${await mojangAPI.getIdFromUUID(minecraft_uuid)}\``;
-        text += `[${minecraft_uuid}]`;
-        text += "\n";
-      }
-      text = text.slice(0, -1);
+    for (const [discord_id, minecraft_uuids] of member_data) {
+      text += await data_to_string(interaction, discord_id, minecraft_uuids);
       text += "\n\n";
     }
+
     const sliced = dm_slice(text);
     for (const chunk of sliced) {
       await interaction.user.send(chunk);
