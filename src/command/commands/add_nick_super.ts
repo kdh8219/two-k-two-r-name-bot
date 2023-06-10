@@ -6,7 +6,7 @@ import {
 
 import mojangAPI from "../../wrapper/mojang-api.js";
 import firebase from "../../wrapper/firebase.js";
-import { add_user } from "../../functions.js";
+import { add_user } from "../../functions/add_user.js";
 
 export default {
   data: new SlashCommandBuilder()

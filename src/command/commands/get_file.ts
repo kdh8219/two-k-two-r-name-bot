@@ -1,7 +1,7 @@
 import { SlashCommandBuilder, ChatInputCommandInteraction } from "discord.js";
 
 import firebase from "../../wrapper/firebase.js";
-import { TUser } from "../../functions.js";
+import { TUser } from "../../types.js";
 
 export default {
   data: new SlashCommandBuilder()

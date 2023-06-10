@@ -6,7 +6,8 @@ import {
 } from "discord.js";
 
 import firebase from "../../wrapper/firebase.js";
-import { TUser, embed_to_channel } from "../../functions.js";
+import { TUser } from "../../types.js";
+import { send_embed } from "../../functions/send_embed.js";
 
 export default {
   data: new SlashCommandBuilder()
@@ -54,23 +55,21 @@ export default {
         UUIDs += uuid;
         UUIDs += "\n";
       });
-    const embed = new EmbedBuilder()
-      .setTitle("User blacklisted")
-      .setColor(0x0099ff)
-      .setFields([
-        {
-          name: "Command sender",
-          value: `${interaction.user.tag}(${interaction.user.id})`,
-        },
-        { name: " ", value: " " },
-        { name: "Target Discord Id", value: discord_id },
-        { name: "UUIDs", value: UUIDs },
-      ])
-      .setTimestamp(interaction.createdAt);
-    await embed_to_channel(
-      interaction.client,
-      process.env.LOG_CHANNEL_ID,
-      embed
-    );
+
+    await send_embed(interaction.client, process.env.LOG_CHANNEL_ID, [
+      new EmbedBuilder()
+        .setTitle("User blacklisted")
+        .setColor(0x0099ff)
+        .setFields([
+          {
+            name: "Command sender",
+            value: `${interaction.user.tag}(${interaction.user.id})`,
+          },
+          { name: " ", value: " " },
+          { name: "Target Discord Id", value: discord_id },
+          { name: "UUIDs", value: UUIDs },
+        ])
+        .setTimestamp(interaction.createdAt),
+    ]);
   },
 };

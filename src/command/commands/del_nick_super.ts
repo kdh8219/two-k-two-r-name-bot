@@ -7,7 +7,7 @@ import {
 
 import mojangAPI from "../../wrapper/mojang-api.js";
 import firebase from "../../wrapper/firebase.js";
-import { embed_to_channel } from "../../functions.js";
+import { send_embed } from "../../functions/send_embed.js";
 
 export default {
   data: new SlashCommandBuilder()
@@ -64,26 +64,23 @@ export default {
         content: `삭제 완료:${discord_tag}(${discord_id})에게서 ${minecraft_id}(${minecraft_uuid})를 제거했습니다.`,
       });
 
-      const embed = new EmbedBuilder()
-        .setTitle("Nick deleted")
-        .setColor(0x0099ff)
-        .setFields([
-          {
-            name: "Command sender",
-            value: `${interaction.user.tag}(${interaction.user.id})`,
-          },
-          { name: " ", value: " " },
-          { name: "Targrt Discord Id", value: discord_id },
-          { name: " ", value: " " },
-          { name: "Minecraft Id", value: minecraft_id },
-          { name: "Minecraft Uuid", value: minecraft_uuid },
-        ])
-        .setTimestamp(interaction.createdAt);
-      await embed_to_channel(
-        interaction.client,
-        process.env.LOG_CHANNEL_ID,
-        embed
-      );
+      await send_embed(interaction.client, process.env.LOG_CHANNEL_ID, [
+        new EmbedBuilder()
+          .setTitle("Nick deleted")
+          .setColor(0x0099ff)
+          .setFields([
+            {
+              name: "Command sender",
+              value: `${interaction.user.tag}(${interaction.user.id})`,
+            },
+            { name: " ", value: " " },
+            { name: "Targrt Discord Id", value: discord_id },
+            { name: " ", value: " " },
+            { name: "Minecraft Id", value: minecraft_id },
+            { name: "Minecraft Uuid", value: minecraft_uuid },
+          ])
+          .setTimestamp(interaction.createdAt),
+      ]);
     } else {
       await interaction.editReply({
         content: `\`에러\`: 해당 계정이 없습니다.`,

@@ -4,12 +4,9 @@ config();
 
 import { getCommands } from "./command/commands.js";
 import mojangAPI from "./wrapper/mojang-api.js";
-import {
-  TUser,
-  delete_members_who_left,
-  embed_to_channel,
-} from "./functions.js";
+import { TUser } from "./types.js";
 import firebase from "./wrapper/firebase.js";
+import { send_embed } from "./functions/send_embed.js";
 
 await mojangAPI.load_cache_from_firestore();
 
@@ -22,10 +19,29 @@ client.once(Events.ClientReady, async (event) => {
   console.log(`[DISCORD] Ready: discord client as ${event.user.tag}`);
   onTime = new Date();
 
-  delete_members_who_left(
-    client,
-    await client.guilds.fetch(process.env.DISCORD_TARGET_GUILD_ID)
-  );
+  const guild = await client.guilds.fetch(process.env.DISCORD_TARGET_GUILD_ID);
+  {
+    const members_collection = firebase.collection("members");
+    const members = await members_collection.get();
+    for (const doc of members.docs) {
+      const data = doc.data() as TUser;
+      try {
+        await guild.members.fetch(data.discord_id);
+      } catch {
+        doc.ref.delete();
+        await send_embed(client, process.env.LOG_CHANNEL_ID, [
+          new EmbedBuilder()
+            .setTitle("Auto Removed")
+            .setColor(0x0099ff)
+            .setFields([
+              { name: "Discord Id", value: data.discord_id },
+              { name: "Minecraft Uuid", value: data.minecraft_uuid },
+            ])
+            .setTimestamp(new Date()),
+        ]);
+      }
+    }
+  }
 });
 
 client.on(Events.InteractionCreate, async (interaction) => {
@@ -63,15 +79,16 @@ client.on(Events.GuildMemberRemove, async (interaction) => {
   for (const doc of exited_user.docs) {
     const data = doc.data() as TUser;
     doc.ref.delete();
-    const embed = new EmbedBuilder()
-      .setTitle("물갈이")
-      .setColor(0x0099ff)
-      .setFields([
-        { name: "Discord Id", value: data.discord_id },
-        { name: "Minecraft Uuid", value: data.minecraft_uuid },
-      ])
-      .setTimestamp(new Date());
-    await embed_to_channel(client, process.env.LOG_CHANNEL_ID, embed);
+    await send_embed(client, process.env.LOG_CHANNEL_ID, [
+      new EmbedBuilder()
+        .setTitle("Auto Removed")
+        .setColor(0x0099ff)
+        .setFields([
+          { name: "Discord Id", value: data.discord_id },
+          { name: "Minecraft Uuid", value: data.minecraft_uuid },
+        ])
+        .setTimestamp(new Date()),
+    ]);
   }
 });
 

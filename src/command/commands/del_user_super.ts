@@ -6,7 +6,7 @@ import {
 } from "discord.js";
 
 import firebase from "../../wrapper/firebase.js";
-import { embed_to_channel } from "../../functions.js";
+import { send_embed } from "../../functions/send_embed.js";
 
 export default {
   data: new SlashCommandBuilder()
@@ -44,23 +44,21 @@ export default {
       await interaction.editReply({
         content: `삭제 완료:${discord_tag}의 계정을 모두 제거했습니다.`,
       });
-      const embed = new EmbedBuilder()
-        .setTitle("User deleted")
-        .setColor(0x0099ff)
-        .setFields([
-          {
-            name: "Command sender",
-            value: `${interaction.user.tag}(${interaction.user.id})`,
-          },
-          { name: " ", value: " " },
-          { name: "Target Discord Id", value: discord_id },
-        ])
-        .setTimestamp(interaction.createdAt);
-      await embed_to_channel(
-        interaction.client,
-        process.env.LOG_CHANNEL_ID,
-        embed
-      );
+
+      await send_embed(interaction.client, process.env.LOG_CHANNEL_ID, [
+        new EmbedBuilder()
+          .setTitle("User deleted")
+          .setColor(0x0099ff)
+          .setFields([
+            {
+              name: "Command sender",
+              value: `${interaction.user.tag}(${interaction.user.id})`,
+            },
+            { name: " ", value: " " },
+            { name: "Target Discord Id", value: discord_id },
+          ])
+          .setTimestamp(interaction.createdAt),
+      ]);
       return;
     } else {
       await interaction.editReply({

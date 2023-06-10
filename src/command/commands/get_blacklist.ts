@@ -1,7 +1,7 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 
 import firebase from "../../wrapper/firebase.js";
-import { TUser } from "../../functions.js";
+import { TUser } from "../../types.js";
 import mojangAPI from "../../wrapper/mojang-api.js";
 
 export default {
