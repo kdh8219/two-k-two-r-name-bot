@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction } from "discord.js";
 
-import mojangAPI from "../wrapper/mojang-api";
+import mojangAPI from "../wrapper/mojang-api.js";
 
 export async function data_to_string(
   interaction: ChatInputCommandInteraction,
