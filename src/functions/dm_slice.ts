@@ -11,14 +11,13 @@ export function dm_slice(raw: string): string[] {
   }
 
   const output: string[] = [];
-
-  let slashed = slasher(raw);
+  let slashed = { front: null, end: raw };
   while (true) {
-    output.push(slashed.front);
     if (slashed.end) {
       slashed = slasher(slashed.end);
     } else {
       return output;
     }
+    output.push(slashed.front);
   }
 }
