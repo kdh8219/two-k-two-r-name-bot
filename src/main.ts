@@ -28,7 +28,7 @@ client.once(Events.ClientReady, async (event) => {
       try {
         await guild.members.fetch(data.discord_id);
       } catch {
-        doc.ref.delete();
+        await doc.ref.delete();
         await send_embed(client, process.env.LOG_CHANNEL_ID, [
           new EmbedBuilder()
             .setTitle("Auto Removed")
@@ -78,7 +78,7 @@ client.on(Events.GuildMemberRemove, async (interaction) => {
     .get();
   for (const doc of exited_user.docs) {
     const data = doc.data() as TUser;
-    doc.ref.delete();
+    await doc.ref.delete();
     await send_embed(client, process.env.LOG_CHANNEL_ID, [
       new EmbedBuilder()
         .setTitle("Auto Removed")

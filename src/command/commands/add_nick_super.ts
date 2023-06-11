@@ -29,6 +29,6 @@ export default {
   async execute(interaction: ChatInputCommandInteraction) {
     const discord_id = interaction.options.getUser("discord")?.id as string;
     const mcid = interaction.options.getString("minecraft_id") as string;
-    add_user(interaction, discord_id, mcid, mojangAPI, firebase);
+    await add_user(interaction, discord_id, mcid, mojangAPI, firebase);
   },
 };

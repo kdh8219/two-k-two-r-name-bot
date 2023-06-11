@@ -24,7 +24,7 @@ export class MojangAPI {
 
     const get_by_id = await this.firestore.where("id", "==", id).get();
     get_by_id.forEach((doc) => doc.ref.delete());
-    this.firestore.add({ uuid: minecraft_uuid, id: id });
+    await this.firestore.add({ uuid: minecraft_uuid, id: id });
 
     this.cache.remove_by_second(id);
     this.cache.set_by_first(minecraft_uuid, id);
@@ -43,7 +43,7 @@ export class MojangAPI {
 
     const get_by_uuid = await this.firestore.where("uuid", "==", uuid).get();
     get_by_uuid.forEach((doc) => doc.ref.delete());
-    this.firestore.add({ uuid: uuid, id: minecraft_id });
+    await this.firestore.add({ uuid: uuid, id: minecraft_id });
 
     this.cache.remove_by_first(uuid);
     this.cache.set_by_second(uuid, minecraft_id);
