@@ -12,8 +12,6 @@ export async function data_to_string(
   let tag: string;
   try {
     const guild_user = await interaction.guild.members.fetch(discord_id);
-    if (guild_user) {
-    }
     const client_user = await interaction.client.users.fetch(discord_id);
     tag =
       client_user.tag.split("#")[1] != "0"
@@ -27,7 +25,7 @@ export async function data_to_string(
   text += "- ";
   text += `\`${nickname}\``;
   text += `【\`${tag}\`】`;
-  text += `[${discord_id}}]`;
+  text += `[${discord_id}]`;
 
   text += "\n";
   for (const minecraft_uuid of minecraft_uuids) {
