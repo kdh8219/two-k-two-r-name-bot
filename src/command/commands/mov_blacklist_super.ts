@@ -16,7 +16,7 @@ export default {
     .addUserOption((option) =>
       option
         .setName("discord")
-        .setDescription("discord id of blacklister")
+        .setDescription("discord id of blacklisted")
         .setRequired(true)
     )
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)

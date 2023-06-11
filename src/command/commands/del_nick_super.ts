@@ -74,7 +74,7 @@ export default {
               value: `${interaction.user.tag}(${interaction.user.id})`,
             },
             { name: " ", value: " " },
-            { name: "Targrt Discord Id", value: discord_id },
+            { name: "Target Discord Id", value: discord_id },
             { name: " ", value: " " },
             { name: "Minecraft Id", value: minecraft_id },
             { name: "Minecraft Uuid", value: minecraft_uuid },
